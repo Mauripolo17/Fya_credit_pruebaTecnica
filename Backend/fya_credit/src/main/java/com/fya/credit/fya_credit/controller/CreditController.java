@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/credit")
+@CrossOrigin("*")
 public class CreditController {
 
     private final CreditService creditService;
@@ -20,9 +21,19 @@ public class CreditController {
         this.creditService = creditService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CreditDto> getCredit(@PathVariable("id") Long id) {
+    @GetMapping("/clienteId/{id}")
+    public ResponseEntity<CreditDto> getCreditByIdCliente(@PathVariable("id") Long id) {
         return ResponseEntity.ok(creditService.getCredit(id));
+    }
+
+    @GetMapping("/client/{cliente}")
+    public ResponseEntity<List<CreditDto>> getCreditByClient(@PathVariable("cliente") String cliente) {
+        return ResponseEntity.ok(creditService.getCreditsByCliente(cliente));
+    }
+
+    @GetMapping("/comercial/{comercial}")
+    public ResponseEntity<List<CreditDto>> getCreditByComercial(@PathVariable("comercial") String comercial) {
+        return ResponseEntity.ok(creditService.getCreditsByComercial(comercial));
     }
 
     @GetMapping

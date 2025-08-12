@@ -1,16 +1,17 @@
 import type React from "react"
 import { useState } from "react"
+import { creditService } from "../services/CreditService"
 
 
 export default function CreditForm() {
   const [formData, setFormData] = useState({
-    nombre: "",
+    nombreCliente: "",
     email: "",
-    tipoDocumento: "",
-    numeroDocumento: "",
-    valorCredito: "",
-    tasaInteres: "",
-    plazoMeses: "",
+    tipoDocumento: "Cedula de ciudadania",
+    numeroDocumento: 0,
+    valorCredito: 0,
+    tasaInteres: 0,
+    plazoMeses: 0,
     comercial: "",
     proposito: "",
   })
@@ -18,7 +19,12 @@ export default function CreditForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Solicitud enviada:", formData)
-    // Aquí iría la lógica para enviar la solicitud
+    try{
+        creditService.createCredit(formData)
+    }catch (error) {
+        console.error("Error al enviar la solicitud:", error)
+        alert("Ocurrió un error al enviar la solicitud. Por favor, inténtalo de nuevo más tarde.")
+    }
   }
 
   const handleInputChange = (field: string, value: string) => {
@@ -34,15 +40,15 @@ export default function CreditForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="nombreCliente" className="block text-sm font-medium text-gray-700">
                 Nombre completo
               </label>
               <input
-                id="nombre"
+                id="nombreCliente"
                 type="text"
                 placeholder="Juan Pérez"
-                value={formData.nombre}
-                onChange={(e) => handleInputChange("nombre", e.target.value)}
+                value={formData.nombreCliente}
+                onChange={(e) => handleInputChange("nombreCliente", e.target.value)}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
@@ -74,9 +80,9 @@ export default function CreditForm() {
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="cedula">Cedula de ciudadania</option>
-                <option value="passport">Pasaporte</option>
-                <option value="cedulaExtranjero">Cedula extranjera</option>
+                <option value="Cedula de ciudadania">Cedula de ciudadania</option>
+                <option value="Pasaporte">Pasaporte</option>
+                <option value="Cedula extranjera">Cedula extranjera</option>
               </select>
             </div>
             <div className="space-y-2">

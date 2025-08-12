@@ -42,7 +42,7 @@ public class Credit {
     private Integer plazoMeses;
 
     @Column (nullable = false)
-    private String comercialQueRegistra;
+    private String comercial;
 
     @Column(nullable = true)
     private String descripcion;

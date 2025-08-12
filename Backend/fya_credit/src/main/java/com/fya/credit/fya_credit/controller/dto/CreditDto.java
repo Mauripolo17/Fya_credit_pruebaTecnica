@@ -23,7 +23,6 @@ public record CreditDto(
         String tipoDocumento,
 
         @NotNull(message = "El número de documento es obligatorio")
-        @Min(10000000)
         Long numeroDocumento,
 
         @NotNull(message = "El valor del crédito es obligatorio")
@@ -41,11 +40,9 @@ public record CreditDto(
         Integer plazoMeses,
 
         @NotBlank(message = "El comercial es obligatorio")
-        String comercialQueRegistra,
+        String comercial,
 
-        String descripcion,
-
-        @NotNull(message = "La fecha de registro es obligatoria")
+        String proposito,
         LocalDate fechaDeRegistro
 ) {}
 
